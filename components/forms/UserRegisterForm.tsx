@@ -10,11 +10,13 @@ import {useState} from "react";
 import {UserRegisterFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {FormFieldType} from "@/components/forms/PatientForm";
+import {registerUser} from "@/lib/actions/user.actions";
 
 
 const UserRegisterForm = ({isRegister}: {isRegister: boolean}) => {
     const router = useRouter();
     const [isLoading, setIsLoading] =useState(false);
+    const [isRegisterFailed, setIsRegisterFailed] = useState(false);
     const form = useForm<z.infer<typeof UserRegisterFormValidation>>({
         resolver: zodResolver(UserRegisterFormValidation),
         defaultValues: {
@@ -26,22 +28,19 @@ const UserRegisterForm = ({isRegister}: {isRegister: boolean}) => {
 
     async function onSubmit({email, password, confirmPassword}: z.infer<typeof UserRegisterFormValidation>) {
         setIsLoading(true);
-       async function userSignUpAction() {
-           const userData = {username:email,password: password};
-           console.log(userData);
-            const res = await fetch('http://localhost:8080/v1/authentication/signup', {
-                method: "post",
-                headers: { 'Content-Type': 'application/json' },
-                mode: 'cors',
-                body: JSON.stringify(userData)
-            })
-            return res;
-        }
-        const signUpResponse: Response = await userSignUpAction();
-        if(!signUpResponse.ok){
+        const signUpResponse: Response = await registerUser({username: email, password});
+        if (!signUpResponse) {
+            console.log("Signup failed")
             //Signup failed
+            //Show failed modal
+            setIsRegisterFailed(true);
+            setIsLoading(false);
+            return;
         }
         setIsLoading(false);
+        console.log("Going to email-confirmation")
+        router.push(`/users/email-confirmation`);
+        //Redirect to email confirmation page
     }
 
     return (
