@@ -13,7 +13,10 @@ import {FormFieldType} from "@/components/forms/PatientForm";
 import {registerUser} from "@/lib/actions/user.actions";
 
 
-const UserRegisterForm = ({isRegister}: {isRegister: boolean}) => {
+const UserRegisterForm = ({isRegister, submitRegister}: {
+    isRegister: boolean,
+    submitRegister: (requestUserDto: RequestUserDto) => void
+}) => {
     const router = useRouter();
     const [isLoading, setIsLoading] =useState(false);
     const [isRegisterFailed, setIsRegisterFailed] = useState(false);
@@ -28,19 +31,8 @@ const UserRegisterForm = ({isRegister}: {isRegister: boolean}) => {
 
     async function onSubmit({email, password, confirmPassword}: z.infer<typeof UserRegisterFormValidation>) {
         setIsLoading(true);
-        const signUpResponse: Response = await registerUser({username: email, password});
-        if (!signUpResponse) {
-            console.log("Signup failed")
-            //Signup failed
-            //Show failed modal
-            setIsRegisterFailed(true);
-            setIsLoading(false);
-            return;
-        }
+        submitRegister({username: email, password});
         setIsLoading(false);
-        console.log("Going to email-confirmation")
-        router.push(`/users/email-confirmation`);
-        //Redirect to email confirmation page
     }
 
     return (
