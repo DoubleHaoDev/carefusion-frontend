@@ -20,6 +20,12 @@
 .DS_Store
 *.pem
 
+### IntelliJ IDEA ###
+.idea/*
+*.iws
+*.iml
+*.ipr
+
 # debug
 npm-debug.log*
 yarn-debug.log*

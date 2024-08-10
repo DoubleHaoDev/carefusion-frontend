@@ -55,3 +55,8 @@ declare type UpdateAppointmentParams = {
     appointment: Appointment;
     type: string;
 };
+
+declare type RequestUserDto = {
+    username: string;
+    password: string;
+}
