@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import PasskeyModal from "@/components/ui/PasskeyModal";
 import UserRegisterForm from "@/components/forms/UserRegisterForm";
 import AlertModal from "@/components/AlertModal";
 import {useState} from "react";
-import {UserRegisterFormValidation} from "@/lib/validation";
 import {registerUser} from "@/lib/actions/user.actions";
-import {z} from "zod";
 import {useRouter} from "next/navigation";
 
 
