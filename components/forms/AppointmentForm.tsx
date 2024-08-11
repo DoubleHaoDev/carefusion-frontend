@@ -9,12 +9,12 @@ import SubmitButton from "@/components/SubmitButton";
 import {useState} from "react";
 import {getAppointmentSchema} from "@/lib/validation";
 import {useRouter} from "next/navigation";
-import {FormFieldType} from "@/components/forms/PatientForm";
 import {Doctors} from "@/constants";
 import {SelectItem} from "@/components/ui/select";
 import Image from "next/image";
 import {createAppointment, updateAppointment} from "@/lib/actions/appointment.actions";
 import {Appointment} from "@/types/appwrite.types";
+import {FormFieldType} from "@/constants/FormFieldTypes";
 
 
 const AppointmentForm = ({type, userId, patientId, appointment, setOpen}: {

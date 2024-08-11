@@ -9,7 +9,7 @@ import SubmitButton from "@/components/SubmitButton";
 import {useState} from "react";
 import {UserRegisterFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
-import {FormFieldType} from "@/components/forms/PatientForm";
+import {FormFieldType} from "@/constants/FormFieldTypes";
 
 
 const EmailConfirmationForm = ({isRegister}: {isRegister: boolean}) => {

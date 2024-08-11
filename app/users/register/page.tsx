@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import PasskeyModal from "@/components/ui/PasskeyModal";
 import UserRegisterForm from "@/components/forms/UserRegisterForm";
 import AlertModal from "@/components/AlertModal";
 import {useState} from "react";
-import {UserRegisterFormValidation} from "@/lib/validation";
 import {registerUser} from "@/lib/actions/user.actions";
-import {z} from "zod";
 import {useRouter} from "next/navigation";
 
 
@@ -27,6 +24,12 @@ export default function UserRegister({searchParams}: SearchParamProps) {
             return;
         }
         setIsRegisterFailed(false);
+
+        // cookies().set("accessToken", signUpResponse.data.accessToken, {
+        //     httpOnly: true,
+        //     maxAge: 24 * 60 * 60,
+        //     sameSite: "strict"
+        // });
         console.log("Going to email-confirmation")
         router.push(`/users/email-confirmation`);
         //Redirect to email confirmation page

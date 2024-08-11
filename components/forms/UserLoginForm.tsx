@@ -10,21 +10,9 @@ import {useState} from "react";
 import {UserFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {createUser} from "@/lib/actions/patient.actions";
+import {FormFieldType} from "@/constants/FormFieldTypes";
 
-
-export enum FormFieldType {
-    INPUT = "input",
-    TEXTAREA = "textarea",
-    PHONE_INPUT = "phoneInput",
-    CHECKBOX = "checkbox",
-    DATE_PICKER = "datePicker",
-    SELECT = "select",
-    SKELETON = "skeleton",
-    PASSWORD = "password"
-}
-
-
-const PatientForm = ({isRegister}: { isRegister: boolean }) => {
+const UserLoginForm = ({isRegister}: { isRegister: boolean }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -81,4 +69,4 @@ const PatientForm = ({isRegister}: { isRegister: boolean }) => {
     )
 }
 
-export default PatientForm;
+export default UserLoginForm;

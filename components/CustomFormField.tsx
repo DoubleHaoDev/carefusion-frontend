@@ -1,7 +1,6 @@
 import React from 'react';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Control} from "react-hook-form";
-import {FormFieldType} from "@/components/forms/PatientForm";
 import Image from "next/image";
 import {Input} from "@/components/ui/input";
 import 'react-phone-number-input/style.css'
@@ -12,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Select, SelectContent, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Textarea} from "@/components/ui/textarea";
 import {Checkbox} from "@/components/ui/checkbox";
+import {FormFieldType} from "@/constants/FormFieldTypes";
 
 interface CustomProps {
     control: Control<any>
