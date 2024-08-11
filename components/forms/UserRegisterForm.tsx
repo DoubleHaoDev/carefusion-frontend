@@ -11,7 +11,6 @@ import {UserRegisterFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {FormFieldType} from "@/constants/FormFieldTypes";
 
-
 const UserRegisterForm = ({isRegister, submitRegister}: {
     isRegister: boolean,
     submitRegister: (requestUserDto: RequestUserDto) => void

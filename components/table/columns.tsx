@@ -1,7 +1,6 @@
 "use client"
 
 import {ColumnDef} from "@tanstack/react-table";
-
 import StatusBadge from "@/components/StatusBadge";
 import {formatDateTime} from "@/lib/utils";
 import {Doctors} from "@/constants";
