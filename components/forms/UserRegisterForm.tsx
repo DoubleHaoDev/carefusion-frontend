@@ -10,8 +10,6 @@ import {useState} from "react";
 import {UserRegisterFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {FormFieldType} from "@/components/forms/PatientForm";
-import {registerUser} from "@/lib/actions/user.actions";
-
 
 const UserRegisterForm = ({isRegister, submitRegister}: {
     isRegister: boolean,
