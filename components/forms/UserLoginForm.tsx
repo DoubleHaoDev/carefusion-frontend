@@ -12,7 +12,7 @@ import {useRouter} from "next/navigation";
 import {createUser} from "@/lib/actions/patient.actions";
 import {FormFieldType} from "@/constants/FormFieldTypes";
 
-const UserLoginForm = ({isRegister}: { isRegister: boolean }) => {
+const UserLoginForm = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const form = useForm<z.infer<typeof UserFormValidation>>({

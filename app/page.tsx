@@ -18,7 +18,7 @@ export default function Home({searchParams}: SearchParamProps) {
                         alt="Patient"
                         className="mb-12 h-10 w-fit"
                     />
-                    <UserLoginForm isRegister={false}/>
+                    <UserLoginForm />
                     <div className="mt-2 justify-items-end text-dark-600 xl:text-right">
                         <Link href="/users/register" className="text-green-500">Signup</Link>
                     </div>
