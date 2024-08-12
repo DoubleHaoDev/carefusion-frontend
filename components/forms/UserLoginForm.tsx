@@ -7,35 +7,36 @@ import {Form} from "@/components/ui/form"
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import {useState} from "react";
-import {UserFormValidation} from "@/lib/validation";
+import {UserLoginFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {createUser} from "@/lib/actions/patient.actions";
 import {FormFieldType} from "@/constants/FormFieldTypes";
+import {loginUser, registerUser} from "@/lib/actions/user.actions";
 
 const UserLoginForm = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const form = useForm<z.infer<typeof UserFormValidation>>({
-        resolver: zodResolver(UserFormValidation),
+    const form = useForm<z.infer<typeof UserLoginFormValidation>>({
+        resolver: zodResolver(UserLoginFormValidation),
         defaultValues: {
-            name: "",
             email: "",
-            phone: ""
+            password: "",
         },
     })
 
-    async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
+    async function onSubmit({email, password}: z.infer<typeof UserLoginFormValidation>) {
         setIsLoading(true);
-        try {
-            const userData = {name, email, phone};
-            const user = await createUser(userData);
-            if (user) {
-                router.push(`/patients/${user.$id}/register`);
+        const signUpResponse: boolean = await loginUser({username: email, password});
+        console.log(signUpResponse);
 
-            }
-        } catch (error) {
-            console.log(error);
+        if (!signUpResponse) {
+            console.log("Login failed")
+            //Signup failed
+            //Show failed modal
+            setIsLoading(false);
+            return;
         }
+        setIsLoading(false);
     }
 
     return (

@@ -13,7 +13,7 @@ export default function UserRegister({searchParams}: SearchParamProps) {
     const [isRegisterFailed, setIsRegisterFailed] = useState(false);
     const router = useRouter();
 
-    async function registerSubmitHandler({username: email, password}: RequestUserDto) {
+    async function registerSubmitHandler({username: email, password}: RequestUserSignupDto) {
 
         const signUpResponse: Response = await registerUser({username: email, password});
         if (!signUpResponse) {

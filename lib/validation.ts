@@ -1,12 +1,8 @@
 import {z} from "zod";
 
-export const UserFormValidation = z.object({
-    name: z.string()
-        .min(2, {message: "Name must be at least 2 characters.",})
-        .max(50, {message: "Name must be at most 50 characters."}),
-    email: z.string().email("Invalid email address."),
-    phone: z.string().refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number."),
-
+export const UserLoginFormValidation = z.object({
+    email: z.string().email("Please enter a valid email address."),
+    password:z.string().min(8, "Please enter a valid password."),
 })
 
 // Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character

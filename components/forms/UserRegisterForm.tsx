@@ -13,7 +13,7 @@ import {FormFieldType} from "@/constants/FormFieldTypes";
 
 const UserRegisterForm = ({isRegister, submitRegister}: {
     isRegister: boolean,
-    submitRegister: (requestUserDto: RequestUserDto) => void
+    submitRegister: (requestUserDto: RequestUserSignupDto) => void
 }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] =useState(false);
