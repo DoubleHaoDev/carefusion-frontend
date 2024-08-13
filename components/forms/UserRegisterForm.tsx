@@ -9,11 +9,11 @@ import SubmitButton from "@/components/SubmitButton";
 import {useState} from "react";
 import {UserRegisterFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
-import {FormFieldType} from "@/components/forms/PatientForm";
+import {FormFieldType} from "@/constants/FormFieldTypes";
 
 const UserRegisterForm = ({isRegister, submitRegister}: {
     isRegister: boolean,
-    submitRegister: (requestUserDto: RequestUserDto) => void
+    submitRegister: (requestUserDto: RequestUserSignupDto) => void
 }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] =useState(false);

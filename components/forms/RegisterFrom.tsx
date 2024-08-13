@@ -10,13 +10,13 @@ import {useState} from "react";
 import {PatientFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {registerPatient} from "@/lib/actions/patient.actions";
-import {FormFieldType} from "@/components/forms/PatientForm";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues} from "@/constants";
 import {Label} from "@/components/ui/label";
 import {SelectItem} from "@/components/ui/select";
 import Image from 'next/image';
 import FileUploader from "@/components/FileUploader";
+import {FormFieldType} from "@/constants/FormFieldTypes";
 
 const RegisterFrom = ({user}: { user: User }) => {
     const router = useRouter();

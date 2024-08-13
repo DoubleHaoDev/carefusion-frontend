@@ -7,47 +7,33 @@ import {Form} from "@/components/ui/form"
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import {useState} from "react";
-import {UserFormValidation} from "@/lib/validation";
+import {UserLoginFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
-import {createUser} from "@/lib/actions/patient.actions";
+import {FormFieldType} from "@/constants/FormFieldTypes";
+import {loginUser, registerUser} from "@/lib/actions/user.actions";
 
-
-export enum FormFieldType {
-    INPUT = "input",
-    TEXTAREA = "textarea",
-    PHONE_INPUT = "phoneInput",
-    CHECKBOX = "checkbox",
-    DATE_PICKER = "datePicker",
-    SELECT = "select",
-    SKELETON = "skeleton",
-    PASSWORD = "password"
-}
-
-
-const PatientForm = ({isRegister}: { isRegister: boolean }) => {
+const UserLoginForm = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const form = useForm<z.infer<typeof UserFormValidation>>({
-        resolver: zodResolver(UserFormValidation),
+    const form = useForm<z.infer<typeof UserLoginFormValidation>>({
+        resolver: zodResolver(UserLoginFormValidation),
         defaultValues: {
-            name: "",
             email: "",
-            phone: ""
+            password: "",
         },
     })
 
-    async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
+    async function onSubmit({email, password}: z.infer<typeof UserLoginFormValidation>) {
         setIsLoading(true);
-        try {
-            const userData = {name, email, phone};
-            const user = await createUser(userData);
-            if (user) {
-                router.push(`/patients/${user.$id}/register`);
+        const loginResponse: boolean = await loginUser({username: email, password});
 
-            }
-        } catch (error) {
-            console.log(error);
+        if (!loginResponse) {
+            //Implement show fail modal here
+            setIsLoading(false);
+            return;
         }
+        setIsLoading(false);
+        //Redirect to patient main page after sign in.
     }
 
     return (
@@ -81,4 +67,4 @@ const PatientForm = ({isRegister}: { isRegister: boolean }) => {
     )
 }
 
-export default PatientForm;
+export default UserLoginForm;

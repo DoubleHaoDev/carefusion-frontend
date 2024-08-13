@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import PasskeyModal from "@/components/ui/PasskeyModal";
 import UserRegisterForm from "@/components/forms/UserRegisterForm";
 import AlertModal from "@/components/AlertModal";
 import {useState} from "react";
-import {UserRegisterFormValidation} from "@/lib/validation";
 import {registerUser} from "@/lib/actions/user.actions";
-import {z} from "zod";
 import {useRouter} from "next/navigation";
 
 
@@ -16,20 +13,15 @@ export default function UserRegister({searchParams}: SearchParamProps) {
     const [isRegisterFailed, setIsRegisterFailed] = useState(false);
     const router = useRouter();
 
-    async function registerSubmitHandler({username: email, password}: RequestUserDto) {
+    async function registerSubmitHandler({username: email, password}: RequestUserSignupDto) {
 
         const signUpResponse: Response = await registerUser({username: email, password});
         if (!signUpResponse) {
-            console.log("Signup failed")
-            //Signup failed
-            //Show failed modal
             setIsRegisterFailed(true);
             return;
         }
         setIsRegisterFailed(false);
-        console.log("Going to email-confirmation")
         router.push(`/users/email-confirmation`);
-        //Redirect to email confirmation page
     }
 
     return (

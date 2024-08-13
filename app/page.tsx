@@ -1,6 +1,5 @@
 import Image from "next/image";
-import {Button} from "@/components/ui/button";
-import PatientForm from "@/components/forms/PatientForm";
+import UserLoginForm from "@/components/forms/UserLoginForm";
 import Link from "next/link";
 import PasskeyModal from "@/components/ui/PasskeyModal";
 
@@ -19,7 +18,7 @@ export default function Home({searchParams}: SearchParamProps) {
                         alt="Patient"
                         className="mb-12 h-10 w-fit"
                     />
-                    <PatientForm isRegister={false}/>
+                    <UserLoginForm />
                     <div className="mt-2 justify-items-end text-dark-600 xl:text-right">
                         <Link href="/users/register" className="text-green-500">Signup</Link>
                     </div>
