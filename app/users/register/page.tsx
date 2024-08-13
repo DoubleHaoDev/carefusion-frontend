@@ -17,22 +17,11 @@ export default function UserRegister({searchParams}: SearchParamProps) {
 
         const signUpResponse: Response = await registerUser({username: email, password});
         if (!signUpResponse) {
-            console.log("Signup failed")
-            //Signup failed
-            //Show failed modal
             setIsRegisterFailed(true);
             return;
         }
         setIsRegisterFailed(false);
-
-        // cookies().set("accessToken", signUpResponse.data.accessToken, {
-        //     httpOnly: true,
-        //     maxAge: 24 * 60 * 60,
-        //     sameSite: "strict"
-        // });
-        console.log("Going to email-confirmation")
         router.push(`/users/email-confirmation`);
-        //Redirect to email confirmation page
     }
 
     return (

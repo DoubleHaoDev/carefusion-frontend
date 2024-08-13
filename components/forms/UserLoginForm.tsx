@@ -9,7 +9,6 @@ import SubmitButton from "@/components/SubmitButton";
 import {useState} from "react";
 import {UserLoginFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
-import {createUser} from "@/lib/actions/patient.actions";
 import {FormFieldType} from "@/constants/FormFieldTypes";
 import {loginUser, registerUser} from "@/lib/actions/user.actions";
 
@@ -26,17 +25,15 @@ const UserLoginForm = () => {
 
     async function onSubmit({email, password}: z.infer<typeof UserLoginFormValidation>) {
         setIsLoading(true);
-        const signUpResponse: boolean = await loginUser({username: email, password});
-        console.log(signUpResponse);
+        const loginResponse: boolean = await loginUser({username: email, password});
 
-        if (!signUpResponse) {
-            console.log("Login failed")
-            //Signup failed
-            //Show failed modal
+        if (!loginResponse) {
+            //Implement show fail modal here
             setIsLoading(false);
             return;
         }
         setIsLoading(false);
+        //Redirect to patient main page after sign in.
     }
 
     return (

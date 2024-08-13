@@ -5,9 +5,7 @@ import type { NextRequest } from 'next/server'
 // }
 
 export function middleware(request: NextRequest) {
-    console.log("IN MIDDLEWARE")
     if (request.nextUrl.pathname.startsWith('/admin')) {
-        console.log("IN MIDDLEWARE2")
         return NextResponse.rewrite(new URL('/admin', request.url))
     }
 
