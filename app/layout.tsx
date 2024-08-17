@@ -3,6 +3,8 @@ import {Plus_Jakarta_Sans} from "next/font/google";
 import "./globals.css";
 import {cn} from "@/lib/utils";
 import {ThemeProvider} from "next-themes";
+import {CareFusionNavigationMenu} from "@/components/CareFusionNavigationMenu";
+
 
 const fontSans = Plus_Jakarta_Sans({
     subsets: ["latin"],
@@ -29,6 +31,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
+            <CareFusionNavigationMenu/>
             {children}
         </ThemeProvider>
         </body>
