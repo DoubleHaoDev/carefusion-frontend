@@ -186,6 +186,10 @@
         @apply bg-green-500 text-white !important;
     }
 
+    .shad-provider-primary-btn {
+        @apply bg-blue-800 text-white !important;
+    }
+
     .shad-danger-btn {
         @apply bg-red-700 text-white !important;
     }
