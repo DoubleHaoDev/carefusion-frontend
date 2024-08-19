@@ -325,7 +325,7 @@ const RegisterFrom = ({user}: { user: User }) => {
                     label="I consent to privacy policy"
                 />
 
-                <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+                <SubmitButton isLoading={isLoading} isPatient={true}>Get Started</SubmitButton>
             </form>
         </Form>
     )

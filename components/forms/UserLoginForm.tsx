@@ -10,9 +10,9 @@ import {useState} from "react";
 import {UserLoginFormValidation} from "@/lib/validation";
 import {useRouter} from "next/navigation";
 import {FormFieldType} from "@/constants/FormFieldTypes";
-import {loginUser, registerUser} from "@/lib/actions/user.actions";
+import {loginUser} from "@/lib/actions/user.actions";
 
-const UserLoginForm = () => {
+const UserLoginForm = ({isPatient}: {isPatient: boolean}) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const form = useForm<z.infer<typeof UserLoginFormValidation>>({
@@ -23,9 +23,10 @@ const UserLoginForm = () => {
         },
     })
 
+    const greetingText : string = isPatient ? "Schedule your first appointment" : "Manage your appointments";
     async function onSubmit({email, password}: z.infer<typeof UserLoginFormValidation>) {
         setIsLoading(true);
-        const loginResponse: boolean = await loginUser({username: email, password});
+        const loginResponse:{userUuid: string} | null = await loginUser({username: email, password});
 
         if (!loginResponse) {
             //Implement show fail modal here
@@ -33,15 +34,15 @@ const UserLoginForm = () => {
             return;
         }
         setIsLoading(false);
-        //Redirect to patient main page after sign in.
+        router.push(`/${isPatient? "patients": "provider"}/${loginResponse.userUuid}/email-confirmation`);
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
                 <section className="mb-12 space-y-4">
-                    <h1 className="header">Hi There</h1>
-                    <p className="text-dark-700">Schedule your first appointment.</p>
+                    <h1 className="header">Welcome Back</h1>
+                    <p className="text-dark-700">{greetingText}</p>
                 </section>
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
@@ -61,7 +62,7 @@ const UserLoginForm = () => {
                     iconSrc="/assets/icons/password.svg"
                     iconAlt="user"
                 />
-                <SubmitButton isLoading={isLoading}>Login</SubmitButton>
+                <SubmitButton isLoading={isLoading} isPatient={isPatient}>Login</SubmitButton>
             </form>
         </Form>
     )
