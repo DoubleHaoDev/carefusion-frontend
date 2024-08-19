@@ -2,8 +2,8 @@ import Image from "next/image";
 import AppointmentForm from "@/components/forms/AppointmentForm";
 import {getPatient} from "@/lib/actions/patient.actions";
 
-export default async function NewAppointment({params: {userId}}: SearchParamProps) {
-    const patient = await getPatient(userId);
+export default async function NewAppointment({params: {userUuid}}: SearchParamProps) {
+    const patient = await getPatient(userUuid);
     return (
         <div className="flex h-screen max-h-screen">
             <section className="remove-scrollbar container my-auto">
@@ -17,7 +17,7 @@ export default async function NewAppointment({params: {userId}}: SearchParamProp
                     />
                     <AppointmentForm
                         type="create"
-                        userId={userId}
+                        userId={userUuid}
                         patientId={patient.$id}
                         setOpen={()=>{}}
                     />

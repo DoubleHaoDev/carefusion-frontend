@@ -182,6 +182,7 @@ const AppointmentForm = ({type, userId, patientId, appointment, setOpen}: {
                 <SubmitButton
                     isLoading={isLoading}
                     className={`${type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"} w-full`}
+                    isPatient={true}
                 >
                     {buttonLabel}
                 </SubmitButton>

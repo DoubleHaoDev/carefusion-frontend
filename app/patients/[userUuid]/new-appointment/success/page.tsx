@@ -6,7 +6,7 @@ import {Doctors} from "@/constants";
 import {formatDateTime} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 
-const Success = async ({params: {userId}, searchParams}: SearchParamProps) => {
+const Success = async ({params: {userUuid}, searchParams}: SearchParamProps) => {
     const appointmentId = (searchParams?.appointment as string) || "";
     const appointment = await getAppointment(appointmentId);
     const doctor = Doctors.find((doc) => doc.name === appointment.primaryPhysician)
@@ -35,7 +35,7 @@ const Success = async ({params: {userId}, searchParams}: SearchParamProps) => {
                         Your <span className="text-green-500">appointment request</span> has been successfully
                         submitted!
                     </h2>
-                    <p>We'll be in touch shortly to confirm.</p>
+                    <p>We&aposll be in touch shortly to confirm.</p>
                 </section>
                 <section className="request-details">
                     <p>Requested appointment details</p>
@@ -60,7 +60,7 @@ const Success = async ({params: {userId}, searchParams}: SearchParamProps) => {
                     </div>
                 </section>
                 <Button variant="outline" className="shad-primary-btn">
-                    <Link href={`/patients/${userId}/new-appointment`}>
+                    <Link href={`/patients/${userUuid}/new-appointment`}>
                         New Appointment
                     </Link>
                 </Button>

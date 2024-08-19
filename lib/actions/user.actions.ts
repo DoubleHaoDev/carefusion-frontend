@@ -14,7 +14,7 @@ export async function registerUser(requestUserDto: RequestUserSignupDto): Promis
     return res.json();
 }
 
-export async function loginUser(requestUserLoginDto: RequestUserLoginDto){
+export async function loginUser(requestUserLoginDto: RequestUserLoginDto): Promise<{userUuid:string} | null>{
     const userData = {username: requestUserLoginDto.username, password: requestUserLoginDto.password};
     const res = await fetch('http://localhost:8080/v1/authentication/login', {
         method: "post",
@@ -23,7 +23,7 @@ export async function loginUser(requestUserLoginDto: RequestUserLoginDto){
         body: JSON.stringify(userData)
     })
     if (!res.ok) {
-        return false;
+        return null;
     }
     const resJson = await res.json();
     cookies().set("accessToken", resJson.token, {
@@ -31,6 +31,12 @@ export async function loginUser(requestUserLoginDto: RequestUserLoginDto){
         maxAge: 3600,
         sameSite: "strict"
     });
+    console.log(resJson);
+    // cookies().set("userUuid", resJson.token, {
+    //     httpOnly: true,
+    //     maxAge: 3600,
+    //     sameSite: "strict"
+    // });
 
-    return true;
+    return {userUuid: resJson.userUuid};
 }

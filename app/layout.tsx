@@ -17,9 +17,7 @@ export const metadata: Metadata = {
     description: "A Healthcare Management System",
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
+export default function RootLayout({children}: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
