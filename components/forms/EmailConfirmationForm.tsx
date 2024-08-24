@@ -68,7 +68,9 @@ const EmailConfirmationForm = ({ isRegister }: { isRegister: boolean }) => {
           iconSrc="/assets/icons/email.svg"
           iconAlt="email"
         />
-        <SubmitButton isLoading={isLoading}>Resend Email</SubmitButton>
+        <SubmitButton isLoading={isLoading} isPatient={false}>
+          Resend Email
+        </SubmitButton>
       </form>
     </Form>
   );

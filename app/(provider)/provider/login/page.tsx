@@ -1,6 +1,6 @@
 import UserLogin from "@/components/users/UserLogin";
+import React from "react";
 
-export default function Home({ searchParams }: SearchParamProps) {
-  const isAdmin = searchParams.admin === "true";
+export default function ProviderLogin() {
   return <UserLogin isPatient={false} />;
 }
