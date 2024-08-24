@@ -9,13 +9,13 @@ jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 describe("Home Page", () => {
   test("should render patient button", () => {
     render(<Home />);
-    const btnPatientLogin = screen.getAllByText("Patient Login");
+    const btnPatientLogin = screen.getByText("Patient Login");
     expect(btnPatientLogin).toBeInTheDocument();
   });
 
   test("should render provider button", () => {
     render(<Home />);
-    const btnProviderLogin = screen.getAllByText("Provider Login");
+    const btnProviderLogin = screen.getByText("Provider Login");
     expect(btnProviderLogin).toBeInTheDocument();
   });
 
