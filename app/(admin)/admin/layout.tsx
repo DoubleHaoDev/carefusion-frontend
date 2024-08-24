@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { CareFusionNavigationMenu } from "@/components/CareFusionNavigationMenu";
 import { AppUserType } from "@/constants/AppUserTypes";
+import React from "react";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],

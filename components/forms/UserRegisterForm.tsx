@@ -74,7 +74,9 @@ const UserRegisterForm = ({
           iconSrc="/assets/icons/password.svg"
           iconAlt="user"
         />
-        <SubmitButton isLoading={isLoading}>Register</SubmitButton>
+        <SubmitButton isLoading={isLoading} isPatient={false}>
+          Register
+        </SubmitButton>
       </form>
     </Form>
   );

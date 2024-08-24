@@ -3,6 +3,7 @@
 import * as Sentry from "@sentry/nextjs";
 import NextError from "next/error";
 import { useEffect } from "react";
+import React from "react";
 
 export default function GlobalError({
   error,

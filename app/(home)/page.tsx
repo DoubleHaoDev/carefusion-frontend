@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import React from "react";
 
-export default function Home({ searchParams }: SearchParamProps) {
-  const isAdmin = searchParams.admin === "true";
+export default function Home() {
   return (
     <div className="h-screen max-h-screen  content-center">
       <div className="flex justify-center m-2">
