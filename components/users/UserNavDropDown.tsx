@@ -9,8 +9,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { AppUserType } from "@/constants/AppUserTypes";
 
 export const UserNavDropDown = () => {
   return (
