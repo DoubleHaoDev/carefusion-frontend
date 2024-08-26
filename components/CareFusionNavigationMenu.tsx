@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { UserNavDropDown } from "@/components/users/UserNavDropDown";
 import { AppUserType } from "@/constants/AppUserTypes";
 

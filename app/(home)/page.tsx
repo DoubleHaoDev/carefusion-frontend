@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import React from "react";
 
 export default function Home() {
   return (
@@ -14,7 +13,7 @@ export default function Home() {
       <div className="flex justify-center flex-row">
         <div>
           <Button className="shad-primary-btn m-3">
-            <Link href="/patients/login">Patient Login</Link>
+            <Link href="/patient/login">Patient Login</Link>
           </Button>
         </div>
         <div>

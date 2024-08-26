@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { CareFusionNavigationMenu } from "@/components/CareFusionNavigationMenu";
 import { AppUserType } from "@/constants/AppUserTypes";
+import { ReactNode } from "react";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -20,15 +21,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
       <body
-        className={cn(
-          "min-h-screen bg-dark-300 font-sans antialiased",
-          fontSans.variable
-        )}
+        className={cn("bg-dark-300 font-sans antialiased", fontSans.variable)}
       >
         <ThemeProvider
           attribute="class"
@@ -37,7 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <CareFusionNavigationMenu appUserType={AppUserType.PATIENT} />
-          {children}
+          <div className="flex-1 h-[calc(100vh-56px)]">{children}</div>
         </ThemeProvider>
       </body>
     </html>

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import EmailConfirmationForm from "@/components/forms/EmailConfirmationForm";
 
-export default function EmailConfirmation({ searchParams }: SearchParamProps) {
+export default function EmailConfirmation() {
   return (
-    <div className="flex h-screen max-h-screen">
+    <div className="flex h-full">
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image

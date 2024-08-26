@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAppointment } from "@/lib/actions/appointment.actions";
@@ -65,7 +64,7 @@ const Success = async ({
           </div>
         </section>
         <Button variant="outline" className="shad-primary-btn">
-          <Link href={`/patients/${userUuid}/new-appointment`}>
+          <Link href={`/patient/${userUuid}/new-appointment`}>
             New Appointment
           </Link>
         </Button>

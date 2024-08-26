@@ -25,7 +25,7 @@ describe("Home Page", () => {
     const btnPatientLogin = screen.getByText("Patient Login");
     expect(btnPatientLogin).toBeInTheDocument();
     fireEvent.click(btnPatientLogin);
-    expect(mockRouter.asPath).toEqual("/patients/login");
+    expect(mockRouter.asPath).toEqual("/patient/login");
   });
 
   test("should route to provider login page when button is clicked", () => {
