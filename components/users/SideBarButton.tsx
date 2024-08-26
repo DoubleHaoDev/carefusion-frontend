@@ -15,29 +15,32 @@ interface SideBarBtn {
 
 const SideBarButton = ({
   sideBarBtnType,
+  userUuid,
 }: {
   sideBarBtnType: SideBarButtonType;
+  userUuid: string;
 }) => {
   let sideBarBtnDetail: SideBarBtn;
+
   switch (sideBarBtnType) {
     case SideBarButtonType.APPOINTMENTS:
       sideBarBtnDetail = {
         text: "View Appointments",
-        href: "/patients/login",
+        href: `/patient/${userUuid}/appointments`,
         icon: "/assets/icons/calendar-days.svg",
       };
       break;
     case SideBarButtonType.BOOK_APPOINTMENT:
       sideBarBtnDetail = {
         text: "Book Appointment",
-        href: "/patients/login",
+        href: `/patient/${userUuid}/new-appointment`,
         icon: "/assets/icons/calendar-plus.svg",
       };
       break;
     case SideBarButtonType.LOGOUT:
       sideBarBtnDetail = {
         text: "Logout",
-        href: "/patients/login",
+        href: "/patient/logout",
         icon: "/assets/icons/log-out.svg",
       };
       break;

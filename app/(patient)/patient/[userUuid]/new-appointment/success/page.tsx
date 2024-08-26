@@ -64,7 +64,7 @@ const Success = async ({
           </div>
         </section>
         <Button variant="outline" className="shad-primary-btn">
-          <Link href={`/patients/${userUuid}/new-appointment`}>
+          <Link href={`/patient/${userUuid}/new-appointment`}>
             New Appointment
           </Link>
         </Button>
