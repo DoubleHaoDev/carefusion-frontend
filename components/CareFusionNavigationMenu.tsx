@@ -26,14 +26,18 @@ export function CareFusionNavigationMenu({
     <div
       className={`bg-primary ${navBarColor} text-green-500 py-2 px-5 flex justify-between`}
     >
-      <Link href={"/"}>
+      <Link href={"/"} className="flex flex-row">
         <Image
-          src="/assets/icons/logo-full.svg"
+          src="/assets/icons/logo-icon.svg"
           height={1000}
           width={1000}
           alt="Patient"
-          className="w-fit"
+          className="w-fit flex-1"
         />
+        &nbsp;
+        <h1 className="flex-1 text-white font-bold text-2xl pt-0.5">
+          CareFusion
+        </h1>
       </Link>
       {appUserType != AppUserType.NONE && <UserNavDropDown />}
     </div>
