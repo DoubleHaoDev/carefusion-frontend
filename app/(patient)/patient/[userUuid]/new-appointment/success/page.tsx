@@ -4,6 +4,7 @@ import { getAppointment } from "@/lib/actions/appointment.actions";
 import { Doctors } from "@/constants";
 import { formatDateTime } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import CareFusionLogoCard from "@/components/CareFusionLogoCard";
 
 const Success = async ({
   params: { userUuid },
@@ -20,13 +21,7 @@ const Success = async ({
     <div className="flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
         <Link href="/">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="logo"
-            className="h-10 w-fit"
-          />
+          <CareFusionLogoCard />
         </Link>
         <section className="flex flex-col items-center">
           <Image

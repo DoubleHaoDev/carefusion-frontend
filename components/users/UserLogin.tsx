@@ -1,6 +1,7 @@
 import Image from "next/image";
 import UserLoginForm from "@/components/forms/UserLoginForm";
 import Link from "next/link";
+import CareFusionLogoCard from "@/components/CareFusionLogoCard";
 
 const UserLogin = ({ isPatient }: { isPatient: boolean }) => {
   const backgroundImage: string = isPatient
@@ -11,17 +12,11 @@ const UserLogin = ({ isPatient }: { isPatient: boolean }) => {
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="Patient"
-            className="mb-12 h-10 w-fit"
-          />
+          <CareFusionLogoCard />
           <UserLoginForm isPatient={isPatient} />
           {isPatient && (
             <div className="mt-2 justify-items-end text-dark-600 xl:text-right">
-              <Link href="/users/register" className="text-green-500">
+              <Link href="/patient/register" className="text-green-500">
                 Signup
               </Link>
             </div>

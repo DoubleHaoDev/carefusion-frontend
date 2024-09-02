@@ -1,6 +1,7 @@
 import Image from "next/image";
 import RegisterFrom from "@/components/forms/RegisterFrom";
 import { getUser } from "@/lib/actions/patient.actions";
+import CareFusionLogoCard from "@/components/CareFusionLogoCard";
 
 const Register = async ({ params: { userId } }: SearchParamProps) => {
   const user = await getUser(userId);
@@ -10,13 +11,7 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
       {/*TODO: OPT verification here*/}
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[860] flex-1 flex-col py-10">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="Patient"
-            className="mb-12 h-10 w-fit"
-          />
+          <CareFusionLogoCard />
           <RegisterFrom user={user} />
           <p className="copyright py-12">© 2024 CareFusion</p>
         </div>

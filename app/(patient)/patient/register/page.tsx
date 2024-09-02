@@ -7,6 +7,7 @@ import AlertModal from "@/components/AlertModal";
 import { useState } from "react";
 import { registerUser } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import CareFusionLogoCard from "@/components/CareFusionLogoCard";
 
 export default function UserRegister({ searchParams }: SearchParamProps) {
   const [isRegisterFailed, setIsRegisterFailed] = useState(false);
@@ -38,13 +39,7 @@ export default function UserRegister({ searchParams }: SearchParamProps) {
       )}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="Patient"
-            className="mb-12 h-10 w-fit"
-          />
+          <CareFusionLogoCard />
           <UserRegisterForm
             isRegister={true}
             submitRegister={registerSubmitHandler}
