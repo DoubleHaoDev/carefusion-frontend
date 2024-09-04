@@ -12,11 +12,19 @@ const passwordValidation = new RegExp(
 
 export const UserRegisterFormValidation = z
   .object({
+    firstname: z
+      .string()
+      .min(2, { message: "First Name must be at least 2 characters." })
+      .max(50, { message: "First Name must be at most 50 characters." }),
+    lastname: z
+      .string()
+      .min(2, { message: "Last Name must be at least 2 characters." })
+      .max(50, { message: "Last Name must be at most 50 characters." }),
     email: z.string().email("Invalid email address."),
     password: z
       .string()
-      .min(2, { message: "Name must be at least 2 characters." })
-      .max(50, { message: "Name must be at most 50 characters." })
+      .min(10, { message: "Password must be at least 10 characters." })
+      .max(50, { message: "Password must be at most 50 characters." })
       .regex(passwordValidation, { message: "Your password is not valid" }),
     confirmPassword: z
       .string()

@@ -24,6 +24,8 @@ const UserRegisterForm = ({
   const form = useForm<z.infer<typeof UserRegisterFormValidation>>({
     resolver: zodResolver(UserRegisterFormValidation),
     defaultValues: {
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -31,12 +33,19 @@ const UserRegisterForm = ({
   });
 
   async function onSubmit({
+    firstname,
+    lastname,
     email,
     password,
     confirmPassword,
   }: z.infer<typeof UserRegisterFormValidation>) {
     setIsLoading(true);
-    submitRegister({ username: email, password });
+    submitRegister({
+      firstname: firstname,
+      lastname: lastname,
+      username: email,
+      password,
+    });
     setIsLoading(false);
   }
 
@@ -47,6 +56,26 @@ const UserRegisterForm = ({
           <h1 className="header">Hi There</h1>
           <p className="text-dark-700">Schedule your first appointment.</p>
         </section>
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="firstname"
+            label="First Name"
+            placeholder="John"
+            iconSrc="/assets/icons/user.svg"
+            iconAlt="firstname"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="lastname"
+            label="Last Name"
+            placeholder="Doe"
+            iconSrc="/assets/icons/user.svg"
+            iconAlt="lastname"
+          />
+        </div>
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}

@@ -1,6 +1,5 @@
 import UserLogin from "@/components/users/UserLogin";
 
-export default function Home({ searchParams }: SearchParamProps) {
-  const isAdmin = searchParams.admin === "true";
+export default function Home() {
   return <UserLogin isPatient={true} />;
 }

@@ -31,7 +31,7 @@ const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
     password,
   }: z.infer<typeof UserLoginFormValidation>) {
     setIsLoading(true);
-    const loginResponse: { userUuid: string } | null = await loginUser({
+    const loginResponse: UserResponseJwt | null = await loginUser({
       username: email,
       password,
     });
@@ -42,9 +42,15 @@ const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
       return;
     }
     setIsLoading(false);
-    router.push(
-      `/${isPatient ? "patients" : "provider"}/${loginResponse.userUuid}/email-confirmation`
-    );
+    if (!loginResponse.emailConfirmed) {
+      router.push(
+        `/${isPatient ? "patient" : "provider"}/${loginResponse.userUuid}/email-confirmation`
+      );
+    } else {
+      router.push(
+        `/${isPatient ? "patient" : "provider"}/${loginResponse.userUuid}`
+      );
+    }
   }
 
   return (

@@ -1,9 +1,17 @@
 "use server";
 import { cookies } from "next/headers";
+import { jwtDecode } from "jwt-decode";
+
+interface UserResponse {
+  token: string;
+}
+
 export async function registerUser(
   requestUserDto: RequestUserSignupDto
-): Promise<any> {
+): Promise<UserResponseJwt | null> {
   const userData = {
+    firstname: requestUserDto.firstname,
+    lastname: requestUserDto.lastname,
     username: requestUserDto.username,
     password: requestUserDto.password,
   };
@@ -16,12 +24,13 @@ export async function registerUser(
   if (!res.ok) {
     return null;
   }
-  return res.json();
+  const signupResponse: UserResponse = await res.json();
+  return jwtDecode(signupResponse.token);
 }
 
 export async function loginUser(
   requestUserLoginDto: RequestUserLoginDto
-): Promise<{ userUuid: string } | null> {
+): Promise<UserResponseJwt | null> {
   const userData = {
     username: requestUserLoginDto.username,
     password: requestUserLoginDto.password,
@@ -35,18 +44,12 @@ export async function loginUser(
   if (!res.ok) {
     return null;
   }
-  const resJson = await res.json();
-  cookies().set("accessToken", resJson.token, {
+  const signupResponse: UserResponse = await res.json();
+  cookies().set("accessToken", signupResponse.token, {
     httpOnly: true,
     maxAge: 3600,
     sameSite: "strict",
   });
-  console.log(resJson);
-  // cookies().set("userUuid", resJson.token, {
-  //     httpOnly: true,
-  //     maxAge: 3600,
-  //     sameSite: "strict"
-  // });
 
-  return { userUuid: resJson.userUuid };
+  return jwtDecode(signupResponse.token);
 }
