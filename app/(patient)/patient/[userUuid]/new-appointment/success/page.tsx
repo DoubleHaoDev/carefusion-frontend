@@ -15,8 +15,7 @@ const Success = async ({
   const doctor = Doctors.find(
     (doc) => doc.name === appointment.primaryPhysician
   );
-  // console.log(appointment);
-  // console.log(appointment.documents[0].primaryPhysician);
+
   return (
     <div className="flex h-screen max-h-screen px-[5%]">
       <div className="success-img">

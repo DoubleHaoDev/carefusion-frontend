@@ -5,7 +5,7 @@ import CareFusionLogoCard from "@/components/CareFusionLogoCard";
 
 export default async function NewAppointment({
   params: { userUuid },
-}: SearchParamProps) {
+}: Readonly<SearchParamProps>) {
   const patient = await getPatient(userUuid);
   return (
     <div className="flex h-screen max-h-screen">
