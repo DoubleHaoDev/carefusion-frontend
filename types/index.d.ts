@@ -57,6 +57,8 @@ declare type UpdateAppointmentParams = {
 };
 
 declare type RequestUserSignupDto = {
+  firstname: string;
+  lastname: string;
   username: string;
   password: string;
 };
@@ -64,4 +66,13 @@ declare type RequestUserSignupDto = {
 declare type RequestUserLoginDto = {
   username: string;
   password: string;
+};
+
+declare type UserResponseJwt = {
+  firstname: string;
+  lastname: string;
+  userUuid: string;
+  emailConfirmed: boolean;
+  exp: string;
+  sub: string;
 };

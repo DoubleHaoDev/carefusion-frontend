@@ -9,15 +9,19 @@ import { registerUser } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import CareFusionLogoCard from "@/components/CareFusionLogoCard";
 
-export default function UserRegister({ searchParams }: SearchParamProps) {
+export default function UserRegister() {
   const [isRegisterFailed, setIsRegisterFailed] = useState(false);
   const router = useRouter();
 
   async function registerSubmitHandler({
+    firstname,
+    lastname,
     username: email,
     password,
   }: RequestUserSignupDto) {
-    const signUpResponse: Response = await registerUser({
+    const signUpResponse: UserResponseJwt | null = await registerUser({
+      firstname: firstname,
+      lastname: lastname,
       username: email,
       password,
     });
@@ -25,8 +29,10 @@ export default function UserRegister({ searchParams }: SearchParamProps) {
       setIsRegisterFailed(true);
       return;
     }
+
     setIsRegisterFailed(false);
-    router.push(`/users/email-confirmation`);
+
+    router.push(`/patient/${signUpResponse.userUuid}/email-confirmation`);
   }
 
   return (
