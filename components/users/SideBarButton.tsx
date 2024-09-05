@@ -1,12 +1,9 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { clearAccessToken } from "@/lib/actions/user.actions";
 
-export enum SideBarButtonType {
-  APPOINTMENTS = "View Appointments",
-  BOOK_APPOINTMENT = "Book Appointment",
-  LOGOUT = "Logout",
-}
 interface SideBarBtn {
   text: string;
   href: string;
@@ -23,24 +20,24 @@ const SideBarButton = ({
   let sideBarBtnDetail: SideBarBtn;
 
   switch (sideBarBtnType) {
-    case SideBarButtonType.APPOINTMENTS:
+    case "View Appointments":
       sideBarBtnDetail = {
         text: "View Appointments",
         href: `/patient/${userUuid}/appointments`,
         icon: "/assets/icons/calendar-days.svg",
       };
       break;
-    case SideBarButtonType.BOOK_APPOINTMENT:
+    case "Book Appointment":
       sideBarBtnDetail = {
         text: "Book Appointment",
         href: `/patient/${userUuid}/new-appointment`,
         icon: "/assets/icons/calendar-plus.svg",
       };
       break;
-    case SideBarButtonType.LOGOUT:
+    case "Logout":
       sideBarBtnDetail = {
         text: "Logout",
-        href: "/patient/logout",
+        href: "/patient/login",
         icon: "/assets/icons/log-out.svg",
       };
       break;
@@ -50,6 +47,13 @@ const SideBarButton = ({
     <Button
       variant="ghost"
       className="bg-gray-700 w-full m-1 justify-start hover:bg-gray-500"
+      onClick={
+        sideBarBtnType === "Logout"
+          ? async () => {
+              await clearAccessToken();
+            }
+          : () => {}
+      }
     >
       <Image
         src={sideBarBtnDetail.icon}

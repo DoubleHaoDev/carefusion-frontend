@@ -53,3 +53,7 @@ export async function loginUser(
 
   return jwtDecode(signupResponse.token);
 }
+
+export async function clearAccessToken() {
+  cookies().delete("accessToken");
+}
