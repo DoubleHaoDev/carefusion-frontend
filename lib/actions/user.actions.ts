@@ -6,6 +6,8 @@ interface UserResponse {
   token: string;
 }
 
+const backendUrl = process.env.BACKEND_ENDPOINT_URL;
+
 export async function registerUser(
   requestUserDto: RequestUserSignupDto
 ): Promise<UserResponseJwt | null> {
@@ -15,7 +17,7 @@ export async function registerUser(
     username: requestUserDto.username,
     password: requestUserDto.password,
   };
-  const res = await fetch("http://localhost:8080/v1/authentication/signup", {
+  const res = await fetch(`${backendUrl}v1/authentication/signup`, {
     method: "post",
     headers: { "Content-Type": "application/json" },
     mode: "cors",
@@ -35,7 +37,7 @@ export async function loginUser(
     username: requestUserLoginDto.username,
     password: requestUserLoginDto.password,
   };
-  const res = await fetch("http://localhost:8080/v1/authentication/login", {
+  const res = await fetch(`${backendUrl}v1/authentication/login`, {
     method: "post",
     headers: { "Content-Type": "application/json" },
     mode: "cors",
@@ -55,5 +57,14 @@ export async function loginUser(
 }
 
 export async function clearAccessToken() {
+  console.log("Bearer " + cookies().get("accessToken")?.value);
+  const res = await fetch(`${backendUrl}v1/authentication/logout`, {
+    method: "post",
+    headers: new Headers({
+      Authorization: "Bearer " + cookies().get("accessToken")?.value,
+    }),
+    mode: "cors",
+  });
+
   cookies().delete("accessToken");
 }

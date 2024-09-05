@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Image from "next/image";
 import { clearAccessToken } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
 
 interface SideBarBtn {
   text: string;
@@ -17,6 +17,7 @@ const SideBarButton = ({
   sideBarBtnType: SideBarButtonType;
   userUuid: string;
 }) => {
+  const router = useRouter();
   let sideBarBtnDetail: SideBarBtn;
 
   switch (sideBarBtnType) {
@@ -51,8 +52,11 @@ const SideBarButton = ({
         sideBarBtnType === "Logout"
           ? async () => {
               await clearAccessToken();
+              router.push(sideBarBtnDetail.href);
             }
-          : () => {}
+          : () => {
+              router.push(sideBarBtnDetail.href);
+            }
       }
     >
       <Image
@@ -62,7 +66,7 @@ const SideBarButton = ({
         alt="calendar"
         className="mr-2 dark:invert"
       />
-      <Link href={sideBarBtnDetail.href}>{sideBarBtnDetail.text}</Link>
+      <p>{sideBarBtnDetail.text}</p>
     </Button>
   );
 };
