@@ -37,27 +37,31 @@ export async function loginUser(
     username: requestUserLoginDto.username,
     password: requestUserLoginDto.password,
   };
-  const res = await fetch(`${backendUrl}v1/authentication/login`, {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    mode: "cors",
-    body: JSON.stringify(userData),
-  });
-  if (!res.ok) {
+
+  try {
+    const res = await fetch(`${backendUrl}v1/authentication/login`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      body: JSON.stringify(userData),
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+    const signupResponse: UserResponse = await res.json();
+    cookies().set("accessToken", signupResponse.token, {
+      httpOnly: true,
+      maxAge: 3600,
+      sameSite: "strict",
+    });
+    return jwtDecode(signupResponse.token);
+  } catch (error) {
     return null;
   }
-  const signupResponse: UserResponse = await res.json();
-  cookies().set("accessToken", signupResponse.token, {
-    httpOnly: true,
-    maxAge: 3600,
-    sameSite: "strict",
-  });
-
-  return jwtDecode(signupResponse.token);
 }
 
 export async function clearAccessToken() {
-  console.log("Bearer " + cookies().get("accessToken")?.value);
   const res = await fetch(`${backendUrl}v1/authentication/logout`, {
     method: "post",
     headers: new Headers({
