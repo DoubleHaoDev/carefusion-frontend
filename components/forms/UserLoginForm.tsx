@@ -11,6 +11,7 @@ import { UserLoginFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "@/constants/FormFieldTypes";
 import { loginUser } from "@/lib/actions/user.actions";
+import { useToast } from "@/hooks/use-toast";
 
 const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
   const router = useRouter();
@@ -22,6 +23,8 @@ const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
       password: "",
     },
   });
+
+  const { toast } = useToast();
 
   const greetingText: string = isPatient
     ? "Schedule your first appointment"
@@ -37,8 +40,10 @@ const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
     });
 
     if (!loginResponse) {
-      //Implement show fail modal here
       setIsLoading(false);
+      toast({
+        title: "Login failed, please try again",
+      });
       return;
     }
     setIsLoading(false);

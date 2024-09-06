@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { CareFusionNavigationMenu } from "@/components/CareFusionNavigationMenu";
 import { AppUserType } from "@/constants/AppUserTypes";
 import { ReactNode } from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
           <CareFusionNavigationMenu appUserType={AppUserType.PATIENT} />
           <div className="flex-1 h-[calc(100vh-56px)]">{children}</div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

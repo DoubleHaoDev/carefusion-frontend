@@ -76,3 +76,8 @@ declare type UserResponseJwt = {
   exp: string;
   sub: string;
 };
+
+declare type SideBarButtonType =
+  | "View Appointments"
+  | "Book Appointment"
+  | "Logout";

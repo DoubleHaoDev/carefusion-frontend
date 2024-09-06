@@ -6,6 +6,8 @@ interface UserResponse {
   token: string;
 }
 
+const backendUrl = process.env.BACKEND_ENDPOINT_URL;
+
 export async function registerUser(
   requestUserDto: RequestUserSignupDto
 ): Promise<UserResponseJwt | null> {
@@ -15,7 +17,7 @@ export async function registerUser(
     username: requestUserDto.username,
     password: requestUserDto.password,
   };
-  const res = await fetch("http://localhost:8080/v1/authentication/signup", {
+  const res = await fetch(`${backendUrl}v1/authentication/signup`, {
     method: "post",
     headers: { "Content-Type": "application/json" },
     mode: "cors",
@@ -35,21 +37,38 @@ export async function loginUser(
     username: requestUserLoginDto.username,
     password: requestUserLoginDto.password,
   };
-  const res = await fetch("http://localhost:8080/v1/authentication/login", {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    mode: "cors",
-    body: JSON.stringify(userData),
-  });
-  if (!res.ok) {
+
+  try {
+    const res = await fetch(`${backendUrl}v1/authentication/login`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      body: JSON.stringify(userData),
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+    const signupResponse: UserResponse = await res.json();
+    cookies().set("accessToken", signupResponse.token, {
+      httpOnly: true,
+      maxAge: 3600,
+      sameSite: "strict",
+    });
+    return jwtDecode(signupResponse.token);
+  } catch (error) {
     return null;
   }
-  const signupResponse: UserResponse = await res.json();
-  cookies().set("accessToken", signupResponse.token, {
-    httpOnly: true,
-    maxAge: 3600,
-    sameSite: "strict",
+}
+
+export async function clearAccessToken() {
+  const res = await fetch(`${backendUrl}v1/authentication/logout`, {
+    method: "post",
+    headers: new Headers({
+      Authorization: "Bearer " + cookies().get("accessToken")?.value,
+    }),
+    mode: "cors",
   });
 
-  return jwtDecode(signupResponse.token);
+  cookies().delete("accessToken");
 }
