@@ -46,7 +46,7 @@ describe("UserSideBar Component", () => {
     const btnBookApptBtn = screen.getByText("Book Appointment");
     expect(btnBookApptBtn).toBeInTheDocument();
     fireEvent.click(btnBookApptBtn);
-    expect(mockRouter.asPath).toEqual(`/patient/${userUuid}/new-appointment`);
+    expect(mockRouter.asPath).toEqual(`/patient/${userUuid}/book-appointment`);
   });
 
   // test("should route to logout page when button is clicked", () => {
