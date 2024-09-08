@@ -73,6 +73,7 @@ declare type UserResponseJwt = {
   lastname: string;
   userUuid: string;
   emailConfirmed: boolean;
+  userType: string;
   exp: string;
   sub: string;
 };
@@ -80,4 +81,5 @@ declare type UserResponseJwt = {
 declare type SideBarButtonType =
   | "View Appointments"
   | "Book Appointment"
-  | "Logout";
+  | "Logout"
+  | "Dashboard";

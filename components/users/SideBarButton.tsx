@@ -31,7 +31,7 @@ const SideBarButton = ({
     case "Book Appointment":
       sideBarBtnDetail = {
         text: "Book Appointment",
-        href: `/patient/${userUuid}/new-appointment`,
+        href: `/patient/${userUuid}/book-appointment`,
         icon: "/assets/icons/calendar-plus.svg",
       };
       break;
@@ -40,6 +40,13 @@ const SideBarButton = ({
         text: "Logout",
         href: "/patient/login",
         icon: "/assets/icons/log-out.svg",
+      };
+      break;
+    case "Dashboard":
+      sideBarBtnDetail = {
+        text: "Dashboard",
+        href: `/patient/${userUuid}`,
+        icon: "/assets/icons/layout-dashboard.svg",
       };
       break;
   }
