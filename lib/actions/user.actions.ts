@@ -62,7 +62,7 @@ export async function loginUser(
 }
 
 export async function clearAccessToken() {
-  const res = await fetch(`${backendUrl}v1/authentication/logout`, {
+  await fetch(`${backendUrl}v1/authentication/logout`, {
     method: "post",
     headers: new Headers({
       Authorization: "Bearer " + cookies().get("accessToken")?.value,
