@@ -12,6 +12,7 @@ import {
   users,
 } from "@/lib/appwrite.config";
 import { InputFile } from "node-appwrite/file";
+import { CreateUserParams, RegisterUserParams } from "@/types";
 
 export const createUser = async (user: CreateUserParams) => {
   try {

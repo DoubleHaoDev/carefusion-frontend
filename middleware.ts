@@ -1,62 +1,75 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { jwtDecode } from "jwt-decode";
-import { AppUserType } from "@/constants/AppUserTypes";
-// export const config = {
-//     matcher:  ['//:path*'],
-// }
+import NextAuth from "next-auth";
+import authConfig from "@/auth.config";
+import {
+  apiAdminPrefix,
+  apiAuthPrefix,
+  apiPatientPrefix,
+  apiProviderPrefix,
+  authRoutes, DEFAULT_ADMIN_LOGIN_REDIRECT,
+  DEFAULT_LOGIN_REDIRECT,
+  DEFAULT_PATIENT_LOGIN_REDIRECT,
+  DEFAULT_PROVIDER_LOGIN_REDIRECT,
+  publicRoutes,
+} from "@/routes";
+import { getToken } from "next-auth/jwt";
+import { UserResponseJwt } from "@/types";
 
-export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  if (pathname.startsWith("/patient")) {
-    return handlePatientRequests(request);
-  } else if (pathname.startsWith("/provider")) {
-    return handleProviderRequests(request);
-  } else if (pathname.startsWith("/admin")) {
-    return handleAdminRequests(request);
+const { auth } = NextAuth(authConfig);
+
+export const config = {
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for API routes
+    "/(api|trpc)(.*)",
+  ],
+};
+
+export default auth(async (req) => {
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isPatientRoute = nextUrl.pathname.startsWith(apiPatientPrefix);
+  const isProviderRoute = nextUrl.pathname.startsWith(apiProviderPrefix);
+  const isAdminRoute = nextUrl.pathname.startsWith(apiAdminPrefix);
+  const session = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+  });
+
+  if (isApiAuthRoute) {
+    return null;
   }
-}
 
-function handlePatientRequests(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const userJwtCookie = request.cookies.get("accessToken");
-  if (
-    !userJwtCookie &&
-    (pathname.startsWith("/patient/login") ||
-      pathname.startsWith("/patient/register"))
-  ) {
-    console.log("pathname2", pathname);
-    return NextResponse.next();
+  if (isAuthRoute) {
+    if (isLoggedIn && session) {
+      const user: UserResponseJwt = session.user as UserResponseJwt;
+      if (isPatientRoute && user.userType === "patient") {
+        return Response.redirect(
+          new URL(DEFAULT_PATIENT_LOGIN_REDIRECT, nextUrl)
+        );
+      } else if (isProviderRoute && user.userType === "provider") {
+        Response.redirect(new URL(DEFAULT_PROVIDER_LOGIN_REDIRECT, nextUrl));
+      } else if (isAdminRoute && user.userType === "admin") {
+        Response.redirect(new URL(DEFAULT_ADMIN_LOGIN_REDIRECT, nextUrl));
+      }
+      return Response.redirect(new URL(user.userType, nextUrl));
+    }
+    return null;
   }
 
-  if (
-    !userJwtCookie &&
-    (!pathname.startsWith("/patient/login") ||
-      !pathname.startsWith("/patient/register"))
-  ) {
-    return NextResponse.redirect(new URL("/patient/login", request.url));
+  if (!isLoggedIn && !isPublicRoute) {
+    if (req.nextUrl.pathname.startsWith("/patient")) {
+      return Response.redirect(new URL("/patient/login", nextUrl));
+    } else if (req.nextUrl.pathname.startsWith("/provider")) {
+      return Response.redirect(new URL("/provider/login", nextUrl));
+    } else {
+      return Response.redirect(new URL("/", nextUrl));
+    }
   }
 
-  if (
-    userJwtCookie &&
-    (pathname.startsWith("/patient/login") ||
-      pathname.startsWith("/patient/register"))
-  ) {
-    return NextResponse.redirect(new URL("/patient/dashboard", request.url));
-  }
-
-  const userJwt: UserResponseJwt = jwtDecode(userJwtCookie!.value);
-  if (userJwt.userType.toLowerCase() !== AppUserType.PATIENT.toLowerCase()) {
-    return NextResponse.redirect(
-      new URL(`/${userJwt.userType}/dashboard`, request.url)
-    );
-  }
-}
-
-function handleProviderRequests(request: NextRequest) {
-  //TODO implement provider routing middleware here
-}
-
-function handleAdminRequests(request: NextRequest) {
-  //TODO implement admin routing middleware here
-}
+  return null;
+});

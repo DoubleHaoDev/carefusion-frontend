@@ -9,6 +9,7 @@ import { ID, Query } from "node-appwrite";
 import { formatDateTime, parseStringify } from "@/lib/utils";
 import { Appointment } from "@/types/appwrite.types";
 import { revalidatePath } from "next/cache";
+import { CreateAppointmentParams, UpdateAppointmentParams } from "@/types";
 
 export const createAppointment = async (
   appointment: CreateAppointmentParams

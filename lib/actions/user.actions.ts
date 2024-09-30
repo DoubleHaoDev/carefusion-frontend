@@ -1,6 +1,13 @@
 "use server";
+
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
+
+import {
+  RequestUserLoginDto,
+  RequestUserSignupDto,
+  UserResponseJwt,
+} from "@/types";
 
 interface UserResponse {
   token: string;
@@ -45,17 +52,13 @@ export async function loginUser(
       mode: "cors",
       body: JSON.stringify(userData),
     });
-
     if (!res.ok) {
       return null;
     }
     const signupResponse: UserResponse = await res.json();
-    cookies().set("accessToken", signupResponse.token, {
-      httpOnly: true,
-      maxAge: 3600,
-      sameSite: "strict",
-    });
-    return jwtDecode(signupResponse.token);
+    const decodedJwt: UserResponseJwt = jwtDecode(signupResponse.token);
+    decodedJwt.jwt = signupResponse.token;
+    return decodedJwt;
   } catch (error) {
     return null;
   }
