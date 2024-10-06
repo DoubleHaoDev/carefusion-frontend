@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { DefaultSession } from "next-auth";
+
 declare type SearchParamProps = {
   params: { [key: string]: string };
   searchParams: { [key: string]: string | string[] | undefined };
@@ -68,7 +70,7 @@ declare type RequestUserLoginDto = {
   password: string;
 };
 
-declare type UserResponseJwt = {
+declare type UserResponseJwt = DefaultSession["user"] & {
   firstname: string;
   lastname: string;
   userUuid: string;
@@ -76,6 +78,7 @@ declare type UserResponseJwt = {
   userType: string;
   exp: string;
   sub: string;
+  jwt: string;
 };
 
 declare type SideBarButtonType =

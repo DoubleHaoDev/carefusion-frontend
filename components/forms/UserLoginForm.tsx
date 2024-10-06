@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 import { FormFieldType } from "@/constants/FormFieldTypes";
 import { loginUser } from "@/lib/actions/user.actions";
 import { useToast } from "@/hooks/use-toast";
+import { LoginSchema } from "@/schemas";
+import { UserResponseJwt } from "@/types";
+import { login } from "@/actions/login";
 
 const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
   const router = useRouter();
@@ -29,35 +32,23 @@ const UserLoginForm = ({ isPatient }: { isPatient: boolean }) => {
   const greetingText: string = isPatient
     ? "Schedule your first appointment"
     : "Manage your appointments";
-  async function onSubmit({
-    email,
-    password,
-  }: z.infer<typeof UserLoginFormValidation>) {
-    setIsLoading(true);
-    const loginResponse: UserResponseJwt | null = await loginUser({
-      username: email,
-      password,
-    });
 
-    if (!loginResponse) {
-      setIsLoading(false);
-      toast({
-        title: "Login failed, please try again",
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    login(values)
+      .then((data) => {
+        if (data?.error) {
+          form.reset();
+          toast({ title: "Login failed, please try again" });
+        }
+
+        if (data?.success) {
+          form.reset();
+        }
+      })
+      .catch(() => {
+        toast({ title: "Login failed, please try again" });
       });
-      return;
-    }
-    setIsLoading(false);
-    if (!loginResponse.emailConfirmed) {
-      router.push(
-        `/${isPatient ? "patient" : "provider"}/${loginResponse.userUuid}/email-confirmation`
-      );
-    } else {
-      router.push(
-        `/${isPatient ? "patient" : "provider"}/${loginResponse.userUuid}`
-      );
-    }
-  }
-
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
