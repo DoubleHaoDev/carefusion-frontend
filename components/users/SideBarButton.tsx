@@ -51,18 +51,19 @@ const SideBarButton = ({
       };
       break;
   }
+  function handleOnClick() {
+    if (sideBarBtnType === "Logout") {
+      signOut();
+    } else {
+      router.push(sideBarBtnDetail.href);
+    }
+  }
 
   return (
     <Button
       variant="ghost"
       className="bg-gray-700 w-full m-1 justify-start hover:bg-gray-500"
-      onClick={
-        sideBarBtnType === "Logout"
-          ? () => signOut()
-          : () => {
-              router.push(sideBarBtnDetail.href);
-            }
-      }
+      onClick={handleOnClick}
     >
       <Image
         src={sideBarBtnDetail.icon}
